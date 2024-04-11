@@ -16,18 +16,19 @@ function getComputerChoice() {
 // Reads the user choice by prompting a message. 
 // Read the choice , should expect rock, paper scissors, case-insensitive.
 
-function playerSelection() {
+/* function playerSelection() {
     return prompt("Please select an item:").toLowerCase();
-}
+} */
 
 // We use Strings to represents data.
 // (String, String) -> String 
 // Takes the computer's selection together with the user's selection to compute the results (Winner).
 // User just runs the play, the idea is to press the play button, then insert his/hers input.
 
-function playRound() {
+function playRound(e) {
 
-    const userSelection = playerSelection(); // asks for user input. 
+    const userSelection = e.target;
+    console.log(userSelection); // asks for user input. 
     const computerSelection = getComputerChoice(); // select the computer choice. 
     console.log("Computer Selection is :" + computerSelection)
 
@@ -49,12 +50,29 @@ function playRound() {
     }
 }
 
-    // We use numbers to represents how many times the user has won the game. 
-    // no-argument -> Integer
-    // This function runs five times, at each round takes note who win the game and in the end 
-    // returns the number of rounds the user has won the game.
+const selections = document.createElement("div")
+const rock = document.createElement("button");
+const paper = document.createElement("button");
+const scissors = document.createElement("button"); 
+selections.textContent = "Please Select Your Choice:"
+rock.textContent = "Rock";
+paper.textContent = "Paper";
+scissors.textContent = "Scissors"; 
+document.body.appendChild(selections); 
+selections.appendChild(rock);
+selections.appendChild(paper);
+selections.appendChild(scissors); 
+
+selections.addEventListener("click", playRound(event))
 
 
+
+// We use numbers to represents how many times the user has won the game. 
+// no-argument -> Integer
+// This function runs five times, at each round takes note who win the game and in the end
+// returns the number of rounds the user has won the game.
+
+/* 
     function playGame() {
         let userScore = 0;
         for (let i = 1; i <= 5; i++) {
@@ -65,5 +83,5 @@ function playRound() {
         return userScore
 
 
-    }
+    } */
 
