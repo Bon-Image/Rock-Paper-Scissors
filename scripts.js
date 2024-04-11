@@ -25,45 +25,97 @@ function getComputerChoice() {
 // Takes the computer's selection together with the user's selection to compute the results (Winner).
 // User just runs the play, the idea is to press the play button, then insert his/hers input.
 
-function playRound(e) {
+function playRound(evt) {
 
-    const userSelection = e.target;
-    console.log(userSelection); // asks for user input. 
+    const userSelection = evt.target.textContent.toLowerCase();
+    console.log(userSelection);
     const computerSelection = getComputerChoice(); // select the computer choice. 
     console.log("Computer Selection is :" + computerSelection)
 
 
     if (computerSelection === userSelection) {
-        return "Tie!"
+        result.textContent = "Tie!"
     }
     else if (computerSelection === "paper" && userSelection === "rock") {
-        return "You lose! Paper beats rock"
+        result.textContent = "You lose! Paper beats rock"
+
     }
     else if (computerSelection === "scissors" && userSelection === "paper") {
-        return "You lose! scissors beats paper"
+        result.textContent = "You lose! scissors beats paper"
     }
     else if (computerSelection === "rock" && userSelection === "scissors") {
-        return "You lose! rock  beats scissors"
+        result.textContent = "You lose! rock  beats scissors"
     }
     else {
-        return "You won!"
+        result.textContent = "You won!"
     }
+    console.log(result.textContent)
+    adjustScore(result.textContent)
+
+
 }
 
-const selections = document.createElement("div")
+const adjustScore = function (roundResult) {
+
+    switch (roundResult) {
+        case "Tie!":
+            break
+        case "You won!":
+            playerScore += 1;
+            break
+        default:
+            computerScore += 1;
+    }
+    console.log(playerScore, computerScore);
+    scores.textContent = `Player Score: ${playerScore}, Computer Score : ${computerScore}`;
+    gameOver(playerScore, computerScore); 
+}
+
+const gameOver = function(ps, cs) {
+
+    if (ps == 5 && cs < 5) {
+        winner.textContent = "Game is over! The winner is: You lucky player!";   
+    } 
+    else if (cs == 5 && ps < 5) {
+        winner.textContent = "Game is over! The winner is: The Machine!" ;  
+    }
+    else{
+        true
+    }
+
+}
+
+let playerScore = 0;
+let computerScore = 0;
+
+const selections = document.createElement("div") // Parent for event delegation. 
+// Button creation
 const rock = document.createElement("button");
 const paper = document.createElement("button");
-const scissors = document.createElement("button"); 
-selections.textContent = "Please Select Your Choice:"
+const scissors = document.createElement("button");
+// User signifier 
+selections.textContent = "Please Select Your Choice:"; 
+
 rock.textContent = "Rock";
 paper.textContent = "Paper";
-scissors.textContent = "Scissors"; 
-document.body.appendChild(selections); 
+scissors.textContent = "Scissors";
+
+document.body.appendChild(selections);
 selections.appendChild(rock);
 selections.appendChild(paper);
-selections.appendChild(scissors); 
+selections.appendChild(scissors);
 
-selections.addEventListener("click", playRound(event))
+selections.addEventListener("click", playRound)
+
+const result = document.createElement("div");
+const scores = document.createElement("div");
+const winner = document.createElement("div"); 
+document.body.appendChild(result); 
+document.body.appendChild(scores);
+document.body.appendChild(winner); 
+
+
+
 
 
 
